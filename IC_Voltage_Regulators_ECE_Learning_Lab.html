@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IC Voltage Regulators | ECE Learning Lab</title>
+<style>
+:root{--navy:#10243a;--blue:#1769aa;--cyan:#16a6b6;--ink:#203044;--muted:#617286;--paper:#f4f7fb;--card:#fff;--line:#dce5ef;--green:#16794b;--red:#b42318;--gold:#f0b429}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.62 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(125deg,#10243a,#1769aa 72%,#16a6b6);color:#fff;padding:42px 22px 36px}
+.hero{max-width:1150px;margin:auto}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:800;color:#bfeaf0}.hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.08;margin:.45rem 0}.hero p{max-width:800px;color:#e6f2ff}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.tag{border:1px solid #ffffff55;background:#ffffff16;border-radius:99px;padding:5px 12px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px #10243a0b;overflow-x:auto}nav .navinner{max-width:1150px;margin:auto;display:flex;gap:4px;padding:8px 12px;white-space:nowrap}nav a{color:var(--navy);text-decoration:none;font-size:.87rem;padding:8px 10px;border-radius:8px}nav a:hover{background:#e8f4fb}
+main{max-width:1150px;margin:24px auto;padding:0 18px 60px}.section{scroll-margin-top:78px;margin:24px 0}.section h2{font-size:1.65rem;color:var(--navy);margin:0 0 14px}.section h3{color:#174b75;margin:18px 0 8px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:22px;margin:12px 0;box-shadow:0 5px 18px #17324d08}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.callout{border-left:4px solid var(--cyan);background:#eaf8fa;padding:13px 16px;border-radius:8px;margin:12px 0}.warning{border-left-color:var(--gold);background:#fff8e6}.formula{background:#f1f6fc;border:1px dashed #aac5df;border-radius:10px;padding:13px 16px;font:600 1.05rem/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}.muted{color:var(--muted)}table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.94rem}th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{background:#eaf1f8;color:var(--navy)}ul,ol{padding-left:1.35rem}.diagram{width:100%;height:auto;display:block;background:#fbfdff;border:1px solid var(--line);border-radius:12px}.btn{border:0;border-radius:9px;background:var(--blue);color:#fff;padding:10px 16px;font-weight:700;cursor:pointer}.btn.secondary{background:#e8eef5;color:var(--navy)}.btn:hover{filter:brightness(.95)}.question{padding:15px 0;border-bottom:1px solid var(--line)}.question:last-child{border-bottom:0}.question p{margin:0 0 8px;font-weight:700}.options label{display:block;padding:5px 8px;border-radius:6px;cursor:pointer}.options label:hover{background:#f2f7fb}.feedback{margin-top:8px;font-size:.93rem;padding:9px 11px;border-radius:7px}.correct{background:#e7f7ee;color:#145c39}.incorrect{background:#fff0ee;color:#8c2019}.unanswered{background:#fff7df;color:#785600}details{border:1px solid var(--line);border-radius:9px;padding:12px 14px;margin:9px 0;background:#fff}summary{font-weight:700;cursor:pointer;color:#174b75}footer{background:var(--navy);color:#d9e6f4;padding:22px;text-align:center}.small{font-size:.88rem}.pill{display:inline-block;padding:2px 8px;border-radius:99px;background:#e9f1f9;color:#23577e;font-size:.78rem;font-weight:700}
+@media(max-width:760px){.grid,.three{grid-template-columns:1fr}.card{padding:16px}nav a{padding:7px 8px}table{font-size:.84rem}th,td{padding:7px}}
+@media print{body{background:white;font-size:11pt}nav,.btn,.no-print{display:none!important}main{max-width:none;padding:0}.card{box-shadow:none;break-inside:avoid;border:1px solid #bbb}.section{break-inside:auto}.section h2{break-after:avoid}details{break-inside:avoid}header{background:#fff;color:#111;padding:15px}.hero p,.eyebrow{color:#333}a{color:#111;text-decoration:none}}
+</style>
+</head>
+<body>
+<header><div class="hero">
+<div class="eyebrow">Analog Electronics · ECE Learning Lab</div>
+<h1>IC Voltage Regulators</h1>
+<p>A practical learning guide to fixed and adjustable regulator ICs, linear regulation, switching regulators, design calculations, troubleshooting, GATE practice, and core-electronics interviews.</p>
+<div class="tags"><span class="tag">B.E./B.Tech ECE</span><span class="tag">GATE Preparation</span><span class="tag">Circuit Design</span><span class="tag">Offline interactive notes</span></div>
+</div></header>
+<nav><div class="navinner">
+<a href="#intro">Introduction</a><a href="#types">Types</a><a href="#circuits">Circuits</a><a href="#working">Working</a><a href="#design">Design & Numericals</a><a href="#compare">Comparison</a><a href="#gate">GATE Practice</a><a href="#interview">Interview</a><a href="#quiz">Quiz</a><a href="#revision">Revision</a>
+</div></nav>
+<main>
+<section class="section" id="intro"><h2>1. Introduction and Learning Objectives</h2>
+<div class="card"><p><b>Definition:</b> An IC voltage regulator is an integrated circuit that maintains a nearly constant DC output voltage despite changes in input voltage, load current, and temperature, within its specified operating limits.</p>
+<p>Rectifiers and filters convert AC into an unregulated DC supply. A regulator stabilizes that DC voltage so electronic circuits receive a suitable supply.</p>
+<div class="callout"><b>Core idea:</b> The regulator senses the output, compares it with an internal reference, and adjusts its pass element or switching duty cycle to reduce output-voltage error.</div>
+<div class="grid"><div><h3>Learning objectives</h3><ul><li>Explain line and load regulation.</li><li>Distinguish 78xx, 79xx, LM317, LDO and switching regulators.</li><li>Calculate output voltage, power loss and efficiency.</li><li>Choose capacitors, heatsinking and protection.</li><li>Debug common regulator-circuit faults.</li></ul></div><div><h3>Prerequisites</h3><ul><li>Ohm’s law and Kirchhoff’s laws</li><li>Diodes, transistors and op-amp feedback</li><li>Rectifier, filter capacitor and DC supplies</li><li>Power, current, thermal resistance and datasheets</li></ul></div></div>
+<h3>Important terms</h3><table><tr><th>Term</th><th>Meaning</th></tr><tr><td>Reference voltage</td><td>Stable internal voltage used as the comparison standard.</td></tr><tr><td>Line regulation</td><td>Output change caused by input-voltage change at a fixed load.</td></tr><tr><td>Load regulation</td><td>Output change caused by load-current change at a fixed input.</td></tr><tr><td>Dropout voltage</td><td>Minimum input-to-output headroom needed to regulate.</td></tr><tr><td>Ripple rejection / PSRR</td><td>Ability to reduce input ripple or disturbances appearing at the output; definitions depend on frequency and datasheet convention.</td></tr><tr><td>Current limit</td><td>Protection that restricts output current during overload.</td></tr></table>
+</div></section>
+
+<section class="section" id="types"><h2>2. Classification of IC Voltage Regulators</h2>
+<div class="grid three">
+<div class="card"><span class="pill">Linear · Fixed</span><h3>78xx series</h3><p>Positive fixed output regulators. Example: 7805 gives nominal +5 V; 7812 gives nominal +12 V.</p><p class="muted small">Commonly used for simple, low-noise supplies when sufficient input headroom is available.</p></div>
+<div class="card"><span class="pill">Linear · Fixed</span><h3>79xx series</h3><p>Negative fixed output regulators. Example: 7905 gives nominal −5 V; 7912 gives nominal −12 V.</p><p class="muted small">Useful for dual-polarity op-amp supplies.</p></div>
+<div class="card"><span class="pill">Linear · Adjustable</span><h3>LM317</h3><p>Adjustable positive regulator. A resistor divider between OUT, ADJ and ground sets the output voltage.</p><p class="muted small">Use the exact datasheet for current, dropout and capacitor requirements.</p></div>
+<div class="card"><span class="pill">Linear · Low dropout</span><h3>LDO regulators</h3><p>Designed to regulate with a relatively small input-output voltage difference.</p><p class="muted small">Stability may depend strongly on output capacitance and its ESR.</p></div>
+<div class="card"><span class="pill">Switching</span><h3>Buck converter</h3><p>Efficiently steps a DC voltage down using a switch, inductor, diode or synchronous switch, and capacitors.</p></div>
+<div class="card"><span class="pill">Switching</span><h3>Boost / buck-boost</h3><p>Boost raises voltage; buck-boost topologies can produce output above or below input, depending on topology.</p></div>
+</div>
+<div class="callout warning"><b>Selection reminder:</b> “78xx” and “79xx” are family names, not a guarantee that every device has the same pinout, current rating, thermal limit or capacitor requirements. Check the exact part’s datasheet.</div>
+</section>
+
+<section class="section" id="circuits"><h2>3. Circuit Diagrams</h2>
+<div class="card"><h3>A. Typical 7805 fixed +5 V regulator</h3>
+<svg class="diagram" viewBox="0 0 760 300" role="img" aria-label="Illustrative 7805 regulator circuit with input capacitor, regulator, output capacitor and ground">
+<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1769aa"/></marker></defs>
+<g stroke="#1769aa" stroke-width="3" fill="none" stroke-linecap="round">
+<path d="M45 125 H240 M390 125 H710" marker-end="url(#arr)"/><path d="M145 125 V172 M125 172 H165 M125 183 H165 M145 183 V235 H350 V170"/><path d="M520 125 V172 M500 172 H540 M500 183 H540 M520 183 V235 H350"/><path d="M350 170 V235"/><rect x="240" y="85" width="150" height="80" rx="8" fill="#eaf4fc"/><path d="M350 235 H520"/>
+</g>
+<g fill="#203044" font-family="Arial,sans-serif" font-size="15"><text x="42" y="105">Unregulated DC</text><text x="42" y="146">Vin</text><text x="267" y="118" font-weight="bold">7805</text><text x="258" y="140">IN  GND  OUT</text><text x="408" y="105">+5 V regulated</text><text x="110" y="160">Cin</text><text x="487" y="160">Cout</text><text x="205" y="258">Common ground</text><text x="275" y="58" font-size="13">Illustrative connection — confirm pinout in datasheet</text></g>
+<g stroke="#203044" stroke-width="2" fill="none"><path d="M350 165 V195 M338 195 H362 M338 203 H362 M350 203 V235"/><path d="M350 235 v10 m-15 0 h30 m-24 7 h18 m-12 7 h6"/></g>
+</svg>
+<p class="small muted">The capacitors shown are illustrative. Choose their values, voltage ratings, placement and any required protection components from the regulator datasheet and the actual source/load conditions.</p>
+<table><tr><th>Part</th><th>Purpose</th></tr><tr><td>7805 IC</td><td>Controls the pass element to hold output near +5 V.</td></tr><tr><td>Input capacitor Cin</td><td>Helps reduce input impedance and transient disturbances; value depends on source wiring and datasheet.</td></tr><tr><td>Output capacitor Cout</td><td>Can improve transient response or stability when required by the device.</td></tr><tr><td>Common ground</td><td>Provides the circuit’s reference and return path.</td></tr></table>
+</div>
+<div class="card"><h3>B. Adjustable LM317 regulator (conceptual)</h3>
+<svg class="diagram" viewBox="0 0 760 245" role="img" aria-label="Conceptual LM317 adjustable regulator with resistor divider">
+<g stroke="#1769aa" stroke-width="3" fill="none"><path d="M45 100 H235 M385 100 H700"/><rect x="235" y="65" width="150" height="70" rx="8" fill="#eaf4fc"/><path d="M310 135 V185 H450 M450 185 V100 M450 185 H450"/><path d="M450 145 H500 M500 145 V170 M490 170 H510 M490 178 H510 M500 178 V205 M490 205 H510 M490 213 H510 M500 213 V225"/><path d="M500 225 H310 V135"/></g>
+<g fill="#203044" font-family="Arial,sans-serif" font-size="15"><text x="45" y="80">Vin</text><text x="270" y="94" font-weight="bold">LM317</text><text x="270" y="116">IN  OUT  ADJ</text><text x="550" y="83">Vout</text><text x="514" y="160">R2</text><text x="514" y="202">R1</text><text x="320" y="215">Ground</text><text x="40" y="145" font-size="13">Input</text><text x="550" y="130" font-size="13">Divider sets output</text></g>
+</svg>
+<div class="formula">Vout ≈ Vref (1 + R2/R1) + Iadj × R2</div>
+<p>For a typical LM317, Vref is approximately 1.25 V. R1 is connected from OUT to ADJ; R2 is connected from ADJ to ground. The exact current and resistor limits are datasheet-dependent.</p>
+</div>
+</section>
+
+<section class="section" id="working"><h2>4. Working Principle</h2>
+<div class="card"><ol><li><b>Reference:</b> An internal reference establishes the target voltage.</li><li><b>Feedback sensing:</b> A fraction of output voltage is compared with the reference.</li><li><b>Error amplification:</b> The control circuit detects whether output is too high or too low.</li><li><b>Correction:</b> A linear regulator adjusts its series pass element; a switching regulator adjusts switching behaviour.</li><li><b>Protection:</b> Many ICs include current limiting and thermal shutdown, but protection features vary by part.</li></ol>
+<h3>DC behaviour</h3><p>Once the input is high enough and load current and temperature remain within the specified range, the regulator maintains the nominal output. If input falls below the required headroom, the output drops out of regulation.</p>
+<h3>AC and transient behaviour</h3><p>Input ripple and sudden load changes are disturbances. The regulator attenuates them according to its frequency-dependent response, output capacitor, layout and load. No regulator removes all ripple at all frequencies.</p>
+<div class="formula">Linear-regulator power loss: Ploss ≈ (Vin − Vout) × Iout</div>
+<p class="muted small">This approximation neglects ground/quiescent current and other losses. Use a more complete datasheet-based calculation when accuracy matters.</p>
+</div>
+</section>
+
+<section class="section" id="design"><h2>5. Equations, Design and Solved Numericals</h2>
+<div class="card"><h3>Essential equations</h3>
+<div class="formula">Line regulation = ΔVout / ΔVin  (at fixed load)</div>
+<div class="formula">Load regulation = change in Vout as load current changes (at fixed Vin)</div>
+<div class="formula">Ploss ≈ (Vin − Vout) Iout</div>
+<div class="formula">ηlinear ≈ (Vout Iout)/(Vin Iin) × 100%</div>
+<div class="formula">LM317: Vout ≈ 1.25(1 + R2/R1) + Iadj R2</div>
+<p>Line regulation may be specified in mV/V or as a percentage. Load regulation may be specified in mV or percentage between defined load conditions. Always follow the datasheet’s stated test conditions and sign convention.</p>
+</div>
+<div class="card"><h3>Example 1 — 7805 power dissipation</h3><p><b>Given:</b> Vin = 12 V, Vout = 5 V, Iout = 0.20 A. Find idealized regulator power loss.</p><p><b>Formula:</b> Ploss ≈ (Vin − Vout)Iout</p><p><b>Substitution:</b> (12 − 5) × 0.20 = 7 × 0.20</p><div class="callout"><b>Answer: 1.4 W.</b> This is significant heat for a small package; check junction temperature and heatsink requirements.</div></div>
+<div class="card"><h3>Example 2 — LM317 output voltage</h3><p><b>Given:</b> R1 = 240 Ω, R2 = 720 Ω, Vref = 1.25 V. Ignore Iadj for this estimate.</p><p>Vout ≈ 1.25(1 + 720/240) = 1.25(1 + 3) = 1.25 × 4.</p><div class="callout"><b>Answer: approximately 5.0 V.</b> Actual output also depends on Iadj, tolerances and operating conditions.</div></div>
+<div class="card"><h3>Example 3 — GATE-style efficiency estimate</h3><p><b>Given:</b> Linear regulator input = 9 V, output = 5 V, output current = 0.10 A. Neglect quiescent current. Estimate efficiency and power loss.</p><p>Pout = 5 × 0.10 = 0.50 W. Pin ≈ 9 × 0.10 = 0.90 W.</p><p>η ≈ (0.50/0.90) × 100% = 55.6%. Ploss ≈ (9 − 5) × 0.10 = 0.40 W.</p><div class="callout"><b>Answer:</b> efficiency ≈ 55.6%; power loss ≈ 0.40 W. A switching regulator may be preferable when efficiency is important.</div></div>
+<div class="card"><h3>Practical design checklist</h3><ul><li>Verify minimum and maximum input voltage, including ripple and transients.</li><li>Confirm output voltage, maximum load current and dropout/headroom.</li><li>Calculate worst-case dissipation and junction temperature.</li><li>Use recommended input/output capacitors and observe ESR requirements.</li><li>Check current limit, safe operating area, thermal shutdown and reverse-current behaviour.</li><li>Keep high-current loops short; use suitable ground layout and decoupling.</li><li>Verify pinout and tab connection from the exact datasheet.</li></ul></div>
+</section>
+
+<section class="section" id="compare"><h2>6. Linear vs Switching Regulators</h2><div class="card"><table><tr><th>Feature</th><th>Linear (e.g., 7805, LM317, LDO)</th><th>Switching (buck/boost)</th></tr><tr><td>Operation</td><td>Pass element operates in its linear region.</td><td>Switches energy through an inductor/capacitor network.</td></tr><tr><td>Efficiency</td><td>Often limited by voltage drop; ideal estimate roughly Vout/Vin.</td><td>Usually higher, but depends on topology, load and design.</td></tr><tr><td>Noise</td><td>Generally low switching noise.</td><td>Switching ripple/EMI requires careful layout and filtering.</td></tr><tr><td>Complexity</td><td>Usually simpler.</td><td>More components and layout considerations.</td></tr><tr><td>Best fit</td><td>Low-noise, modest power, small Vin–Vout difference.</td><td>Large conversion ratio or higher-efficiency power conversion.</td></tr></table>
+<h3>Common regulator families</h3><table><tr><th>Family</th><th>Output</th><th>Typical use</th></tr><tr><td>7805</td><td>Fixed positive +5 V</td><td>Simple 5 V supply</td></tr><tr><td>7905</td><td>Fixed negative −5 V</td><td>Negative analog rail</td></tr><tr><td>LM317</td><td>Adjustable positive</td><td>Adjustable bench / embedded supply</td></tr><tr><td>LDO</td><td>Fixed or adjustable; low dropout</td><td>Battery-powered electronics</td></tr><tr><td>Buck</td><td>Lower DC voltage</td><td>Efficient DC-DC conversion</td></tr></table>
+</div></section>
+
+<section class="section" id="gate"><h2>7. GATE-Style Practice Questions</h2><p class="muted">These are original practice questions, not claimed to be actual previous-year GATE questions. Open each item to view its answer and explanation.</p>
+<div class="card">
+<details><summary>Q1 · Easy — What is the nominal output of a 7805?</summary><p><b>Answer: +5 V.</b> The 78xx family denotes positive fixed regulators; “05” identifies the nominal 5 V output.</p></details>
+<details><summary>Q2 · Easy — Which family commonly provides fixed negative outputs?</summary><p><b>Answer: 79xx.</b> For example, 7905 is nominally −5 V.</p></details>
+<details><summary>Q3 · Moderate — Vin = 10 V, Vout = 5 V, Iout = 0.2 A. Approximate linear-regulator loss?</summary><p><b>Answer: 1 W.</b> Ploss ≈ (10 − 5) × 0.2 = 1 W.</p></details>
+<details><summary>Q4 · Moderate — A linear regulator has Vin = 10 V and Vout = 5 V. Neglecting quiescent current, what is the approximate efficiency?</summary><p><b>Answer: 50%.</b> η ≈ Vout/Vin × 100% = 5/10 × 100%.</p></details>
+<details><summary>Q5 · Moderate — What happens when Vin becomes too close to Vout for a conventional regulator?</summary><p><b>Answer:</b> It loses regulation as it enters dropout; output can fall below its target.</p></details>
+<details><summary>Q6 · Easy — What is the main purpose of feedback in a regulator?</summary><p><b>Answer:</b> To sense output error and adjust the control element to stabilize the output.</p></details>
+<details><summary>Q7 · Moderate — For LM317, R1 = 240 Ω and R2 = 480 Ω. Ignoring Iadj, estimate Vout.</summary><p><b>Answer: 3.75 V.</b> Vout ≈ 1.25(1 + 480/240) = 1.25 × 3.</p></details>
+<details><summary>Q8 · Difficult — Why can an LDO oscillate after changing its output capacitor?</summary><p><b>Answer:</b> The control loop may depend on output capacitance and ESR. A capacitor outside the allowed range can reduce stability margin.</p></details>
+<details><summary>Q9 · Moderate — Which regulator type is usually preferred for efficient step-down conversion from a high DC input?</summary><p><b>Answer: Buck switching regulator.</b> It transfers energy through switching components and can reduce voltage with lower losses than a linear regulator.</p></details>
+<details><summary>Q10 · Difficult — A 5 V linear regulator draws 0.3 A from 15 V. Estimate loss, neglecting quiescent current.</summary><p><b>Answer: 3 W.</b> (15 − 5) × 0.3 = 3 W. Thermal design is essential.</p></details>
+</div>
+</section>
+
+<section class="section" id="interview"><h2>8. Core Electronics Interview Preparation</h2>
+<div class="card">
+<details><summary>1. What is a voltage regulator?</summary><p>A circuit that maintains a stable output voltage against specified input, load and temperature variations.</p></details>
+<details><summary>2. Explain line regulation.</summary><p>It measures output-voltage variation due to input-voltage change while load is held constant. Datasheets specify test conditions and units.</p></details>
+<details><summary>3. Explain load regulation.</summary><p>It measures output-voltage change between specified load conditions at a fixed input voltage.</p></details>
+<details><summary>4. Why does a 7805 become hot?</summary><p>It dissipates approximately (Vin − 5 V) × load current. Reduce voltage drop/current, improve heatsinking, or consider a switching converter.</p></details>
+<details><summary>5. What is dropout voltage?</summary><p>The minimum headroom between input and output required to maintain regulation. It varies with load and temperature.</p></details>
+<details><summary>6. Why use an LDO instead of a standard linear regulator?</summary><p>An LDO can regulate with a smaller input-output difference, useful when supply headroom is limited. It is not automatically more efficient in every condition.</p></details>
+<details><summary>7. How do you select input and output capacitors?</summary><p>Follow the exact IC datasheet for capacitance, voltage rating, ESR and placement. Consider source impedance and transient load requirements.</p></details>
+<details><summary>8. What protections might an IC regulator include?</summary><p>Current limiting, thermal shutdown and sometimes safe-operating-area or short-circuit protection. Confirm the particular device specification.</p></details>
+<details><summary>9. The output is lower than expected. What do you check?</summary><p>Measure input under load, confirm pinout and ground, check load current, dropout, wiring, thermal shutdown, capacitor connections and whether the part is damaged.</p></details>
+<details><summary>10. Why might a switching regulator create EMI?</summary><p>Fast switching edges and pulsed currents produce high-frequency energy. Minimize hot-loop area, place input capacitors close, use a suitable layout and validate filtering.</p></details>
+<details><summary>11. What is PSRR?</summary><p>Power-supply rejection ratio describes how much a supply disturbance is attenuated at the output, usually with frequency and operating conditions specified.</p></details>
+<details><summary>12. How would you test a regulator in the lab?</summary><p>Use a current-limited supply and suitable load; measure output across input and load ranges; observe ripple/transients with correct probe grounding; monitor temperature and compare with datasheet limits.</p></details>
+</div>
+</section>
+
+<section class="section" id="quiz"><h2>9. Interactive 10-Question Quiz</h2><p>Choose one answer per question, then select <b>Check Answers</b>. The score is calculated out of 10 and as a percentage. Unanswered questions are identified separately.</p>
+<div class="card" id="quizBox"><div id="questions"></div><button class="btn" id="checkBtn">Check Answers</button> <button class="btn secondary" id="resetBtn">Reset Quiz</button><div id="score" aria-live="polite"></div></div>
+</section>
+
+<section class="section" id="revision"><h2>10. Quick Revision Sheet</h2>
+<div class="card"><h3>Formula sheet</h3><div class="formula">Ploss ≈ (Vin − Vout) Iout</div><div class="formula">ηlinear ≈ (Vout/Vin) × 100% (neglect quiescent current)</div><div class="formula">LM317: Vout ≈ 1.25(1 + R2/R1) + IadjR2</div>
+<h3>High-priority points</h3><ul><li>78xx: positive fixed regulator; 79xx: negative fixed regulator.</li><li>LM317: adjustable positive regulator.</li><li>Dropout occurs when the input headroom is insufficient.</li><li>Linear-regulator efficiency is constrained by the voltage drop and current.</li><li>High power loss means high junction temperature; verify thermal limits.</li><li>Capacitor stability requirements differ by regulator IC.</li><li>Switching regulators are often better for high efficiency, but require EMI-aware layout.</li></ul>
+<h3>Common mistakes and troubleshooting</h3><table><tr><th>Symptom</th><th>Possible cause / check</th></tr><tr><td>Output too low</td><td>Input sag, excessive load, dropout, wrong pinout or thermal protection.</td></tr><tr><td>IC overheats</td><td>Excessive Vin–Vout drop, high current, insufficient heatsinking or poor airflow.</td></tr><tr><td>Output oscillates</td><td>Incorrect capacitor/ESR, layout issue or unsuitable load; check datasheet.</td></tr><tr><td>Unexpected negative/zero output</td><td>Ground/polarity error, incorrect pin connections or damaged device.</td></tr><tr><td>Excess ripple</td><td>Insufficient input filtering, inadequate headroom, poor layout or regulator PSRR limitations.</td></tr></table>
+<div class="callout"><b>Memory aid:</b> 78xx = positive; 79xx = negative; 317 = adjustable positive (check the specific datasheet).</div>
+</div></section>
+</main>
+<footer><p><b>ECE Learning Lab · IC Voltage Regulators</b></p><p class="small">Educational material. Always verify component limits, pinouts and capacitor requirements against the manufacturer datasheet before building a circuit.</p><button class="btn secondary no-print" onclick="window.print()">Print / Save as PDF</button></footer>
+<script>
+const quiz = [
+{q:"A 7805 is designed to provide a nominal:",o:["+5 V","−5 V","+12 V","Adjustable negative voltage"],a:0,e:"7805 is a positive fixed 5 V regulator."},
+{q:"Which series is commonly used for fixed negative regulation?",o:["78xx","79xx","LM317 only","555"],a:1,e:"The 79xx family provides fixed negative output voltages."},
+{q:"For Vin = 12 V, Vout = 5 V and Iout = 0.1 A, approximate linear loss is:",o:["0.1 W","0.5 W","0.7 W","1.7 W"],a:2,e:"(12 − 5) × 0.1 = 0.7 W."},
+{q:"Dropout means:",o:["Output is exactly zero","Input headroom is insufficient to regulate","Current is always zero","Ripple is fully removed"],a:1,e:"Below required headroom, the regulator cannot maintain the target output."},
+{q:"LM317 output voltage is primarily set using:",o:["An external resistor divider","An antenna","A crystal oscillator","Only an inductor"],a:0,e:"The OUT–ADJ resistor and ADJ–ground resistor set the output."},
+{q:"Neglecting quiescent current, idealized linear-regulator efficiency is approximately:",o:["Vin/Vout","Vout/Vin","Vin − Vout","100 × Vin"],a:1,e:"Pout/Pin ≈ Vout/Vin when input and output currents are approximately equal."},
+{q:"A buck converter is used to:",o:["Step down DC voltage efficiently","Convert DC directly to acoustic sound","Always invert polarity","Regulate only negative voltages"],a:0,e:"A buck converter is a switching step-down DC-DC converter."},
+{q:"An output capacitor can affect an LDO's:",o:["Stability","Pin count only","Nominal resistor colour","AC mains frequency"],a:0,e:"Capacitance and ESR requirements can affect control-loop stability."},
+{q:"Which is the most appropriate first check when regulator output is unexpectedly low?",o:["Assume IC is broken","Measure input under load and check headroom/load","Remove ground","Increase load current"],a:1,e:"Input sag, dropout and overload are common causes; measure before replacing parts."},
+{q:"For Vin = 15 V, Vout = 5 V and Iout = 0.3 A, approximate dissipation is:",o:["0.3 W","1.5 W","3 W","4.5 W"],a:2,e:"(15 − 5) × 0.3 = 3 W; check thermal design."}
+];
+const questions = document.getElementById('questions');
+quiz.forEach((q,i)=>{const d=document.createElement('div');d.className='question';d.id='q'+i;
+let s='<p>'+(i+1)+'. '+q.q+'</p><div class="options">';
+q.o.forEach((o,j)=>{s+='<label><input type="radio" name="q'+i+'" value="'+j+'"> '+String.fromCharCode(65+j)+'. '+o+'</label>';});
+s+='</div><div class="feedback" id="f'+i+'" hidden></div>';d.innerHTML=s;questions.appendChild(d);});
+document.getElementById('checkBtn').addEventListener('click',()=>{
+let score=0,unanswered=0;
+quiz.forEach((q,i)=>{const selected=document.querySelector('input[name="q'+i+'"]:checked');const f=document.getElementById('f'+i);f.hidden=false;
+if(!selected){unanswered++;f.className='feedback unanswered';f.textContent='Unanswered. Correct answer: '+String.fromCharCode(65+q.a)+'. '+q.o[q.a]+'. '+q.e;}
+else if(Number(selected.value)===q.a){score++;f.className='feedback correct';f.textContent='Correct. '+q.e;}
+else{f.className='feedback incorrect';f.textContent='Incorrect. Correct answer: '+String.fromCharCode(65+q.a)+'. '+q.o[q.a]+'. '+q.e;}
+});
+document.getElementById('score').innerHTML='<div class="callout"><b>Score: '+score+'/10 ('+(score*10)+'%)</b><br>Unanswered: '+unanswered+'. Review the explanations below each question.</div>';
+});
+document.getElementById('resetBtn').addEventListener('click',()=>{document.querySelectorAll('#questions input').forEach(x=>x.checked=false);document.querySelectorAll('.feedback').forEach(x=>{x.hidden=true;x.textContent='';});document.getElementById('score').innerHTML='';});
+</script>
+</body></html>
